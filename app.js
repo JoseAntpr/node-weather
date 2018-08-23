@@ -1,17 +1,8 @@
 const argv = require('./config/yargs').argv;
+const location = require('./location/location');
 
-const axios = require('axios');
-
-let encondedUrl = encodeURI( argv.direccion );
-
-axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encondedUrl}&key=AIzaSyDKxdzslhNCRCh2KSNID5UgKGjaVGYfa9I`)
+location.getLocationLatLng( argv.direccion )
     .then( resp => {
-
-        let location = resp.data.results[0];
-        let coords = location.geometry.location;
-
-        console.log(location.formatted_address, coords);
+        console.log(resp);
     })
-    .catch( err => console.log('ERRORRR !!!!', e));
-
-console.log(argv.direccion);
+    .catch( err => console.log('ERRORR !!', err))
